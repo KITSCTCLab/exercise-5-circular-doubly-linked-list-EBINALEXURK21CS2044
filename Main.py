@@ -4,7 +4,6 @@ class Node:
         self.previous = self
         self.next = self
 
-        
 
 class DoublyCircularLinkedList:
     def __init__(self):
@@ -73,4 +72,46 @@ class DoublyCircularLinkedList:
             self.head = temp.next
             self.count -= 1
             return True
-        
+        if index == self.count - 1:
+            temp = self.end
+            self.head.previous = temp.previous
+            temp.previous.next = self.head
+            self.end = temp.previous
+            self.count -= 1
+            return True
+
+        curr_node = self.head
+        for ind in range(index):
+            curr_node = curr_node.next
+        curr_node.previous.next = curr_node.next
+        curr_node.next.previous = curr_node.previous
+        self.count -= 1
+        return True
+
+    def get_previous_next(self, index) -> list:
+        if index < 0 or index >= self.count:
+            return -1
+        curr_node = self.head
+        for ind in range(index):
+            curr_node = curr_node.next
+        return [curr_node.previous.data, curr_node.next.data]
+
+
+# Do not change the following code
+operations = []
+for specific_operation in input().split(','):
+    operations.append(specific_operation.strip())
+input_data = input()
+data = []
+iteration_count = 0
+
+for item in input_data.split(', '):
+    inner_list = []
+    if item.isnumeric():
+        data.append(int(item))
+    elif item.startswith('['):
+        item = item[1:-1]
+        for letter in item.split(','):
+            if letter.isnumeric():
+                inner_list.append(int(letter))
+        data.append(inner_list)
