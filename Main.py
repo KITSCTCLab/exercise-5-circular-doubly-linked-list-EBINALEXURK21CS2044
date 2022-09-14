@@ -73,3 +73,4 @@ class DoublyCircularLinkedList:
             self.head = temp.next
             self.count -= 1
             return True
+        
